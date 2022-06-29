@@ -1,0 +1,290 @@
+
+{#{% extends 'basepage.html' %}#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 50%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #ff5d5d;
+  color: white;
+}
+</style>
+
+</head>
+<body>
+<div class="text-box">
+     <h1 class="heading-primary">
+      <span class="heading-primary-main">hiii {{ request.user.username }}</span>
+{#       <span class="heading-primary-sub">world wide web</span>#}
+      </h1>
+</div>
+<table id="customers">
+    <tr>
+        <th>day</th>
+{#        <th>username</th>#}
+        <th>date</th>
+    </tr>
+
+
+
+{% for x in attend %}
+    <tr>
+
+{#    <td>{{ x.user }}</td>#}
+    <td>{{ x.created_at|date:"d-M-Y"}}</td>
+    <td>{{ x.add }}</td>
+    </tr>
+
+{% endfor %}
+</table>
+</body>
+</html>
+{% comment %}
+
+<script>
+    var clockIn = document.getElementById('clockIn');
+var list = document.getElementById('list');
+var list2 = document.getElementById('list2');
+var list3 = document.getElementById('list3');
+var clock = document.getElementById('clock');
+
+clockIn.addEventListener("click", timeStamp);
+
+function clockRunner () {
+  var time = moment().format('dddd h:mm:ss');
+  clock.innerHTML = time;
+  setTimeout(clockRunner, 1000);
+}
+
+window.onload = clockRunner();
+
+function timeStamp (event){
+
+  var timeStamp = moment().format("[Date: ]DD/MM/YYYY [Time: ] HH:mm:ss");
+  var id = event.target.id;
+
+  if(id === 'clockOut') {
+    var localClockIn = localStorage.getItem("clockIn");
+    var clockOutStamp = moment().format("DD/MM/YYYY HH:mm:ss");
+
+    var diff = moment.utc(moment(clockOutStamp, "DD/MM/YYYY HH:mm:ss").diff(moment(localClockIn, "DD/MM/YYYY HH:mm:ss"))).format("HH:mm:ss");
+
+    var node = document.createElement('li');
+      node.append(timeStamp);
+      document.getElementById("list2").appendChild(node);
+
+    var node = document.createElement('li');
+      node.append("Totalhg: " + diff);
+      document.getElementById("list3").appendChild(node);
+
+      document.getElementById('clockOut').id = 'clockIn';
+
+
+  } else {
+      localStorage.setItem(id, timeStamp);
+      var node = document.createElement('li');
+      node.append(timeStamp);
+      document.getElementById("list").appendChild(node);
+      clockIn.id = 'clockOut';
+  }
+
+}
+
+</script>
+{% endcomment %}
+
+{% comment %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+{#    <title>Stopwatch</title>#}
+
+    <link rel="stylesheet" href="styles.css">
+
+    <script type="text/javascript" src="script.js"></script>
+
+</head>
+<body>
+
+    <div class="container">
+
+        <div id="display">
+            00:00:00
+        </div>
+
+        <div class="buttons">
+            <button id="startStop" onclick="startStop()">Start</button> <button id="reset" onclick="reset()">Reset</button><button id="time">time</button>
+        </div>
+{#<a href="{% url 'current' %}"><button>current</button></a>#}
+    </div>
+
+</body>
+</html>
+
+<script>
+//Define vars to hold time values
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
+
+//Define vars to hold "display" value
+let displaySeconds = 0;
+let displayMinutes = 0;
+let displayHours = 0;
+
+//Define var to hold setInterval() function
+let interval = null;
+
+//Define var to hold stopwatch status
+let status = "stopped";
+
+//Stopwatch function (logic to determine when to increment next value, etc.)
+function stopWatch(){
+
+    seconds++;
+
+    //Logic to determine when to increment next value
+    if(seconds / 60 === 1){
+        seconds = 0;
+        minutes++;
+
+        if(minutes / 60 === 1){
+            minutes = 0;
+            hours++;
+        }
+
+    }
+
+    //If seconds/minutes/hours are only one digit, add a leading 0 to the value
+    if(seconds < 10){
+        displaySeconds = "0" + seconds.toString();
+    }
+    else{
+        displaySeconds = seconds;
+    }
+
+    if(minutes < 10){
+        displayMinutes = "0" + minutes.toString();
+    }
+    else{
+        displayMinutes = minutes;
+    }
+
+    if(hours < 10){
+        displayHours = "0" + hours.toString();
+    }
+    else{
+        displayHours = hours;
+    }
+    var times=document.getElementById("display").innerHTML = displayHours + ":" + displayMinutes + ":" + displaySeconds;
+    //Display updated time values to user
+{#console.log(times)#}
+
+ $(document).ready(function(){
+    $(document).on('click', '#time', function(){
+    var time=times;
+
+
+        {#var time= $('$times').val();#}
+console.log(time)
+        if(time ==""){
+            alert("Please complete field");
+        }else{
+            $.ajax({
+                type: "POST",
+                url: "{%  url 'inserts' %}",
+                data:{
+                    time:time,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+                success: function(){
+                    alert('Save Data');
+
+                    window.location.reload();
+                },
+                error:function (){
+                    alert("error");
+                }
+            });
+        }
+    });
+});
+
+
+}
+
+
+
+function startStop(){
+
+    if(status === "stopped"){
+
+        //Start the stopwatch (by calling the setInterval() function)
+        interval = window.setInterval(stopWatch, 1000);
+        document.getElementById("startStop").innerHTML = "Stop";
+        status = "started";
+{#console.log(stop)#}
+    }
+    else{
+
+        window.clearInterval(interval);
+        document.getElementById("startStop").innerHTML = "Start";
+        status = "stopped";
+
+    }
+
+}
+
+//Function to reset the stopwatch
+function reset(){
+
+    window.clearInterval(interval);
+    seconds = 0;
+    minutes = 0;
+    hours = 0;
+    document.getElementById("display").innerHTML = "00:00:00";
+    document.getElementById("startStop").innerHTML = "Start";
+
+}
+
+
+</script>{% endcomment %}
+<style>
+    .container{
+    height: 300px;
+    width: 100%;
+}
+
+#display{
+    width: 100%;
+    font-size: 72px;
+    text-align: center;
+    margin: 0px auto;
+}
+
+.buttons{
+    text-align: center;
+}
+</style>

@@ -1,0 +1,340 @@
+{##}
+{#{% extends 'base.html' %}#}
+{#{% load crispy_forms_tags %}#}
+{#{% load static %}#}
+{##}
+{#{% block content %}#}
+{#    <link rel="stylesheet" href="{% static 'css/main.css' %}">#}
+{#    <div class="containers" style="margin-top: 30px;">#}
+{#    <form action="" method="POST">#}
+{#      {% csrf_token %}#}
+{##}
+{#          {{ form.as_p }}#}
+{##}
+{#      <div class="form-group" id="signup-button">#}
+{#          <button class="btn ">Sign In</button>#}
+{#      </div>#}
+{#      <div class="form-group">#}
+{#          <small class="text-muted ml-3" >Don't have an account yet? <a href="#">Sign Up Today</a></small>#}
+{#      </div>#}
+{#    </form>#}
+{#    </div>#}
+{#{% endblock %}#}
+{#</title>#}
+{#{% extends 'base.html' %}#}
+{#{% load static %}#}
+{#{% block content %}#}
+
+{#<h2 class ="text-center"> Login</h2>#}
+
+{#<div class = "col-md-6 offset-md-3">#}
+{#	<form method ="POST">#}
+{##}
+{#		{% csrf_token %}#}
+{##}
+{#	  <div class="form-group">#}
+{##}
+{#	    <input type="text" class="form-control" placeholder="Enter Username" name = "username">#}
+{##}
+{#	  </div>#}
+{#	  <div class="form-group">#}
+{##}
+{#	    <input type="password" class="form-control"  placeholder="Enter Password" name="password">#}
+{#	  </div>#}
+{##}
+{##}
+{#	  <button type="submit" class="btn btn-secondary">Login</button>#}
+{#        <a href="{% url 'password_reset' %}"><i>Forgot Password?</i></a>#}
+{#	</form>#}
+
+</div>
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* Add a background color when the inputs get focus */
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #b734db;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+    border-radius: 20px;
+}
+
+button:hover {
+  opacity:1;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  padding: 14px 20px;
+  background-color: #f44336;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn, .signupbtn {
+  float: left;
+  width: 50%;
+}
+
+/* Add padding to container elements */
+.container {
+  padding: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: #474e5d;
+  padding-top: 50px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Style the horizontal ruler */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 35px;
+  top: 15px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #f1f1f1;
+}
+
+.close:hover,
+.close:focus {
+  color: #f44336;
+  cursor: pointer;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn, .signupbtn {
+     width: 100%;
+  }
+}
+</style>
+
+{% load static %}
+
+<!DOCTYPE html>
+<html style="font-size: 16px;">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>Login</title>
+       <style>
+  .button{
+    position: relative;
+    width: 70px;
+    height: 30px;
+    font-size: 10px;
+    background-color: #d04c58;
+    color: #fff;
+    border: none;
+    border-radius:4px;
+    cursor: pointer;
+    transition: width .5s,
+    border-radius .5s;
+}
+.button *{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity .25s;
+}
+.icon{
+  opacity: 0;
+}
+  .button:focus{
+    width: 30px;
+    background-color: #44c08a;
+    border-radius:50%;
+  }
+  .button:focus .text{
+    opacity: 0;
+  }
+  .button:focus .icon{
+    opacity: 1;
+    transition-delay: .5s;
+  }
+
+
+  .button1{
+    position: relative;
+    width: 70px;
+    height: 30px;
+    font-size: 10px;
+    background-color: #16bba9;
+    color: #fff;
+    border: none;
+    border-radius:4px;
+    cursor: pointer;
+    transition: width .5s,
+    border-radius .5s;
+}
+.button1 *{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity .25s;
+}
+.icon{
+  opacity: 0;
+}
+  .button1:focus{
+    width: 30px;
+    background-color: #d04c58;
+    border-radius:50%;
+  }
+  .button1:focus .text{
+    opacity: 0;
+  }
+  .button1:focus .icon{
+    opacity: 1;
+    transition-delay: .5s;
+  }
+</style>
+    <link rel="stylesheet" href="../../static/nicepage.css" media="screen">
+<link rel="stylesheet" href="../../static/About-1.css" media="screen">
+
+       <link rel="stylesheet" href="{% static 'nicepage.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'About-1.css' %}" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery-1.9.1.min.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 4.11.3, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+
+
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": ""
+}</script>
+    <meta name="theme-color" content="#8945e8">
+    <meta property="og:title" content="About 1">
+    <meta property="og:type" content="website">
+  </head>
+  <body data-home-page="https://website2038352.nicepage.io/About-1.html?version=85e1805b-ccbc-4e00-a12f-3b817441e2b2" data-home-page-title="About 1" class="u-body u-xl-mode">
+    <section class="u-align-center u-clearfix u-section-1" id="sec-05d1">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-1">
+                <div class="u-container-layout u-container-layout-1">
+                  <img class="u-image u-image-contain u-image-default u-image-1" src="../../static/images/insiv_logo.png" alt="" data-image-width="650" data-image-height="520">
+                  <p style="text-align: center">Copyright&nbsp;©&nbsp; 2022 &nbsp;
+	<img src="{% static '../../static/images/insiv_logo.png' %}" width="5%" alt="logo">
+	&nbsp;All&nbsp;Rights&nbsp;reserved
+</p>
+                </div>
+              </div>
+              <div class="u-align-center u-container-style u-custom-color-3 u-layout-cell u-radius-50 u-shape-round u-size-30 u-layout-cell-2">
+                <div class="u-container-layout u-container-layout-2">
+                  <div class="u-form u-login-control u-radius-50 u-white u-form-1">
+                    <form method="POST" class="u-clearfix u-form-custom-backend u-form-spacing-29 u-form-vertical u-inner-form" source="custom" name="form" style="padding: 30px;">
+                        {% csrf_token %}
+                        <div class="u-form-group u-form-name">
+                        <label for="username" class="u-label">Username *</label>
+                            <input type="text" class="form-control" placeholder="Enter Username" name = "username">
+{#                        <input type="text" placeholder="Enter your Username" id="login" name="username" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-input-1" required="">#}
+                      </div>
+                      <div class="u-form-group u-form-password">
+                        <label for="password" class="u-label">Password *</label>
+                          <input type="password" class="form-control"  placeholder="Enter Password" name="password">
+{#                        <input type="text" placeholder="Enter your Password" id="password" name="password" class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-input-2" required="">#}
+                      </div>
+                      <div class="u-form-checkbox u-form-group">
+                        <input type="checkbox" id="checkbox-a30d" name="remember" value="On">
+                        <label for="checkbox-a30d" class="u-label">Remember me</label>
+                      </div>
+                      <div class="u-align-left u-form-group u-form-submit">
+{#                        <a href="{% url 'login' %}" class="u-border-none u-btn u-btn-submit u-button-style u-palette-3-base u-btn-1">Login</a>#}
+{#                        <input type="submit" value="submit" class="u-form-control-hidden">#}
+                          <button type="submit" class="btn btn-secondary">Login</button>
+                      </div>
+{#                        <input type="submit" class="fadeIn fourth" value="Log In">#}
+                      <input type="hidden" value="" name="recaptchaResponse">
+                      <input type="hidden" id="siteId" name="siteId" value="2038352">
+                      <input type="hidden" id="pageId" name="pageId" value="2038353">
+                    </form>
+                  </div>
+
+
+
+{#                        <button class="button">#}
+{#                          <span class="text">Submit</span>#}
+{#                          <i class="ri-check-line icon"></i>#}
+{#                        </button>#}
+{#                         <button type="submit" class="button">#}
+{#                             <span class="text">Submit</span>#}
+{#                             <i class="ri-check-line icon"></i>#}
+{#                         </button>#}
+{#                         <button type="submit" class="button1">#}
+{#                             <span class="text">Submit</span>#}
+{#                             <i class="ri-check-line icon"></i>#}
+{#                         </button>#}
+
+                  <a  href="#" class="u-border-active-palette-2-base u-border-hover-palette-1-base u-border-none u-btn u-button-style u-login-control u-login-forgot-password u-none u-text-body-alt-color u-text-hover-palette-3-base u-btn-3">Forgot password?</a>
+{#                  <a href="{% url 'register' %}" class="u-border-active-palette-2-base u-border-hover-palette-1-base u-border-none u-btn u-button-style u-login-control u-login-create-account u-none u-text-body-alt-color u-text-hover-palette-3-base u-btn-3">Don't have an account?</a>#}
+                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
+{#{% endblock %}#}

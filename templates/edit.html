@@ -1,0 +1,57 @@
+{#{% extends 'basepage.html' %}#}
+
+{% block content %}
+    <div class="d-flex flex-column-fluid">
+							<!--begin::Container-->
+							<div class="container">
+                            <div class="row">
+<table id="customers">
+    <th>id</th>
+     <th><span>detail</span></th>
+ <th>date</th>
+     {% for x in member %}
+         <tr>
+    <td>{{ forloop.counter}}</td>
+    <td>{{ x.add }}</td>
+             <td>{{ x.created_at }}
+{#         <td>  <button type="button" class="btn btn-sm btn-warning edit" name="{{ x.username }}">edit</button>#}
+</td>
+         </tr>
+    {% endfor %}
+</table>
+{#{% comment %}#}
+ <style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 30%;
+  {#position: relative;#}
+  {#left: 300px;#}
+  {#bottom: 300px;#}
+  position:absolute;
+}
+
+#customers td, #customers th {
+  {#border: 1px solid #ddd;#}
+  padding: 8px;
+
+}
+
+#customers tr:nth-child(even){background-color: #f7f8f8;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #D7F9EF;
+  color: #0BB783;
+{#border-radius:10px ;#}
+}
+</style>
+{#               {% endcomment %}#}
+                            </div>
+    </div>
+</div>
+{% endblock %}

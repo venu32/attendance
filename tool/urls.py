@@ -27,4 +27,5 @@ urlpatterns = [
     path('admin', views.admin, name='admin'),
     path('home', views.home, name ="home"),
     path('basepage', views.basepage, name ="basepage"),
+    path('edit/<id>', views.edit, name='edit'),
 ]

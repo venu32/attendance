@@ -6,6 +6,8 @@ class Attendance (models.Model):
     add = models.CharField(max_length=50, default="")
     user = models.CharField(max_length=50, default="")
     created_at = models.DateField(auto_now_add=True)
+    clock_in = models.CharField(max_length=100, default=0)
+    clock_out = models.TimeField(auto_now=True)
     # time = models.DateField()
 
     class Meta:

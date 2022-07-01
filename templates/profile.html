@@ -1,8 +1,9 @@
 {#{% extends "base.html" %}#}
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
  <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
+{% block content %}
 
 {#<form class="" method="POST">#}
 
@@ -70,7 +71,8 @@
                         <a href="{% url 'logout' %}" class="btn" style="color: #131212; background-color: #faf7f6;bottom:800px" type="submit" id="header-links">Logout</a>
 					</div>
 {#                            < id="user" value="{{ request.user.username }}"></>#}
-
+{{ clock_in }}
+{{ clock_out }}
 
                 </div>
 			</div>
@@ -611,6 +613,7 @@ mark{
 	display: block;
 }
 </style>
+
 {% comment %}
 <div class="col-12 pt-1">
 						<p class="mb-4 pb-2">Client Budget</p>
@@ -694,3 +697,4 @@ mark{
 							<i class='uil uil-sign-alt mr-3'></i><span class="text">walking tours</span>
 						</label>
 					</div>{% endcomment %}
+{% endblock %}

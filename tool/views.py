@@ -1,4 +1,5 @@
-
+# from datetime import datetime
+import datetime
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import render, redirect
@@ -11,6 +12,10 @@ from django.shortcuts import HttpResponseRedirect
 from django.contrib import messages
 # from tool.forms import loginform
 # from tool.models import Attendance
+from django.contrib.auth.models import AnonymousUser
+from django.core.cache import cache
+# from django.contrib.auth.views import logout, authenticate, login
+from django.views.decorators.cache import cache_control
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
@@ -19,6 +24,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
+
+from . import models
 from .forms import SignUpForm, EditProfileForm
 from .models import Attendance, Times
 
@@ -107,6 +114,16 @@ def insert(request):
         # , last_name=request.POST['last_name'],
         # address=request.POST['address'], user_name=request.POST['user_name'])
         member.save()
+
+        clock_in = datetime.datetime.now()
+        add_clock_in = models.Attendance.objects.create(clock_in=clock_in)
+        add_clock_in.save()
+
+        clock_out = datetime.datetime.now()
+        duration = clock_out - clock_in
+
+        add_clock_get = models.Attendance.objects.all()
+
     return render(request, 'registeration.html')
     # current_user = request.user
     # print(user.id)
@@ -146,9 +163,13 @@ def register_user(request):
     context = {'form': form}
     return render(request, 'registeration.html', context)
 
+@cache_control(no_cache=True, must_revalidate=True)
 def logout_user(request):
     logout(request)
-    messages.success(request,('Youre now logged out'))
+    # messages.success(request,('Youre now logged out'))
+    # request.session.clear()
+    # session.pop()
+    # user.session_set.all().delete()
     return redirect('login')
     # return render(request, "home.html")
 
@@ -158,3 +179,12 @@ def admin(request):
 
 def basepage(request):
     return render(request, "basepage.html")
+
+def edit(request,id):
+    # if request.method == "POST":
+    #     id = request.POST.get('id')
+        members = Attendance.objects.filter(user=id)
+        context = {'member': members, 'id': id}
+        return render(request, 'edit.html', context)
+        # return HttpResponse("id")
+
